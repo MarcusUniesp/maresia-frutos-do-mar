@@ -8,7 +8,7 @@ import Cardapio from "./pages/Cardapio/Cardapio";
 import Galeria from "./pages/Galeria/Galeria";
 import Localizacao from "./pages/Localizacao/Localizacao";
 import Contato from "./pages/Contato/Contato";
-// import Reserva from "./pages/Reserva";
+import Reserva from "./pages/Reserva/Reserva";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
                 element={<Localizacao />}
               />
               <Route path="/contato" element={<Contato />} />
-              {/* <Route path="/reservar" element={<Reserva />} /> */}
+              <Route path="/reservar" element={<Reserva />} />
             </Routes>
           </main>
           <Footer />
