@@ -2,7 +2,7 @@ import api from "./api";
 
 export const unidadesService = {
   getAll: async () => {
-    const response = await api.get("/unidades");
+    const response = await api.get("/api/unidades/");
     return response.data;
   },
 
