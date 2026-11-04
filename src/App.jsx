@@ -7,7 +7,7 @@ import Unidade from "./pages/Unidade/Unidade";
 import Cardapio from "./pages/Cardapio/Cardapio";
 import Galeria from "./pages/Galeria/Galeria";
 import Localizacao from "./pages/Localizacao/Localizacao";
-// import Contato from "./pages/Contato";
+import Contato from "./pages/Contato/Contato";
 // import Reserva from "./pages/Reserva";
 
 function App() {
@@ -26,8 +26,8 @@ function App() {
                 path="/unidade/:id/localizacao"
                 element={<Localizacao />}
               />
-              {/* <Route path="/contato" element={<Contato />} />
-              <Route path="/reservar" element={<Reserva />} /> */}
+              <Route path="/contato" element={<Contato />} />
+              {/* <Route path="/reservar" element={<Reserva />} /> */}
             </Routes>
           </main>
           <Footer />
