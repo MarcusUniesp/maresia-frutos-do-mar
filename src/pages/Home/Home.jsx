@@ -4,7 +4,7 @@ import UnidadesContext from "../../contexts/UnidadesContext";
 import Loading from "../../components/common/Loading";
 
 export default function Home() {
-  const { unidades, loading, error, selecionarUnidade } =
+  const { unidades, loading, /*error,*/ selecionarUnidade } =
     useContext(UnidadesContext);
   const [unidadeHover, setUnidadeHover] = useState(null);
 
@@ -51,18 +51,18 @@ export default function Home() {
     return <Loading />;
   }
 
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-areia/30">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-tinta mb-4">
-            Erro ao carregar unidades
-          </h2>
-          <p className="text-gray-600">{error}</p>
-        </div>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-areia/30">
+  //       <div className="text-center">
+  //         <h2 className="text-2xl font-bold text-tinta mb-4">
+  //           Erro ao carregar unidades
+  //         </h2>
+  //         <p className="text-gray-600">{error}</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen">
