@@ -4,7 +4,7 @@ import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./pages/Home/Home";
 import Unidade from "./pages/Unidade/Unidade";
-// import Cardapio from "./pages/Cardapio";
+import Cardapio from "./pages/Cardapio/Cardapio";
 // import Galeria from "./pages/Galeria";
 // import Localizacao from "./pages/Localizacao";
 // import Contato from "./pages/Contato";
@@ -20,8 +20,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/unidade/:id" element={<Unidade />} />
-              {/* <Route path="/unidade/:id/cardapio" element={<Cardapio />} />
-              <Route path="/unidade/:id/galeria" element={<Galeria />} />
+              <Route path="/unidade/:id/cardapio" element={<Cardapio />} />
+              {/* <Route path="/unidade/:id/galeria" element={<Galeria />} />
               <Route
                 path="/unidade/:id/localizacao"
                 element={<Localizacao />}
