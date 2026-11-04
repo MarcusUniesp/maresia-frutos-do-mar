@@ -5,7 +5,7 @@ import Footer from "./components/layout/Footer";
 import Home from "./pages/Home/Home";
 import Unidade from "./pages/Unidade/Unidade";
 import Cardapio from "./pages/Cardapio/Cardapio";
-// import Galeria from "./pages/Galeria";
+import Galeria from "./pages/Galeria/Galeria";
 // import Localizacao from "./pages/Localizacao";
 // import Contato from "./pages/Contato";
 // import Reserva from "./pages/Reserva";
@@ -21,8 +21,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/unidade/:id" element={<Unidade />} />
               <Route path="/unidade/:id/cardapio" element={<Cardapio />} />
-              {/* <Route path="/unidade/:id/galeria" element={<Galeria />} />
-              <Route
+              <Route path="/unidade/:id/galeria" element={<Galeria />} />
+              {/* <Route
                 path="/unidade/:id/localizacao"
                 element={<Localizacao />}
               />
