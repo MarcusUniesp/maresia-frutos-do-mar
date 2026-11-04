@@ -55,9 +55,13 @@ Certifique-se de ter o [Node.js](https://nodejs.org/) (versão 18 ou superior) e
 ### 2. Clonagem do repositório e execução
 
 ```bash
+# Clone o repositório
 git clone https://github.com/MarcusUniesp/maresia-frutos-do-mar.git
-cd maresia-frutos-do-mar/frontend
+
+# Instale as dependências
 npm install
+
+# Execute
 npm run dev
 ```
 
