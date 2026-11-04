@@ -6,7 +6,7 @@ import Home from "./pages/Home/Home";
 import Unidade from "./pages/Unidade/Unidade";
 import Cardapio from "./pages/Cardapio/Cardapio";
 import Galeria from "./pages/Galeria/Galeria";
-// import Localizacao from "./pages/Localizacao";
+import Localizacao from "./pages/Localizacao/Localizacao";
 // import Contato from "./pages/Contato";
 // import Reserva from "./pages/Reserva";
 
@@ -22,11 +22,11 @@ function App() {
               <Route path="/unidade/:id" element={<Unidade />} />
               <Route path="/unidade/:id/cardapio" element={<Cardapio />} />
               <Route path="/unidade/:id/galeria" element={<Galeria />} />
-              {/* <Route
+              <Route
                 path="/unidade/:id/localizacao"
                 element={<Localizacao />}
               />
-              <Route path="/contato" element={<Contato />} />
+              {/* <Route path="/contato" element={<Contato />} />
               <Route path="/reservar" element={<Reserva />} /> */}
             </Routes>
           </main>
