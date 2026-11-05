@@ -1,124 +1,45 @@
 /* eslint-disable react-hooks/immutability */
-/* eslint-disable react-hooks/set-state-in-effect */
 import { useParams, Link } from "react-router-dom";
-import { useContext, useEffect, useState, useMemo } from "react";
+import { useContext, useEffect, useState } from "react";
+import { unidadesService } from "../../services/unidadesService";
 import UnidadesContext from "../../contexts/UnidadesContext";
-
-//! Dados mockados (serão substituídos pela API)
-const unidadesMock = [
-  { id: 1, nome: "Maresia - Unidade Centro" },
-  { id: 2, nome: "Maresia - Unidade Beach" },
-  { id: 3, nome: "Maresia - Unidade Mall" },
-];
-
-const fotosMock = {
-  1: [
-    // Unidade Centro
-    {
-      id: 1,
-      url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
-      legenda: "Ambiente sofisticado com vista para o mar",
-    },
-    {
-      id: 2,
-      url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80",
-      legenda: "Nossos pratos especiais de frutos do mar",
-    },
-    {
-      id: 3,
-      url: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80",
-      legenda: "Decoração aconchegante e elegante",
-    },
-    {
-      id: 4,
-      url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
-      legenda: "Experiência gastronômica única",
-    },
-    {
-      id: 5,
-      url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
-      legenda: "Pratos preparados com ingredientes frescos",
-    },
-    {
-      id: 6,
-      url: "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=800&q=80",
-      legenda: "Detalhes que fazem a diferença",
-    },
-    {
-      id: 7,
-      url: "https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=800&q=80",
-      legenda: "Espaço ideal para reuniões e celebrações",
-    },
-    {
-      id: 8,
-      url: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80",
-      legenda: "Bar completo com drinks especiais",
-    },
-  ],
-  2: [
-    // Unidade Beach
-    {
-      id: 1,
-      url: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80",
-      legenda: "Vista privilegiada para a praia",
-    },
-    {
-      id: 2,
-      url: "https://images.unsplash.com/photo-1534939561126-655d645a42e6?w=800&q=80",
-      legenda: "Área externa com mesas na areia",
-    },
-    {
-      id: 3,
-      url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
-      legenda: "Nossa famosa pizza de frutos do mar",
-    },
-    {
-      id: 4,
-      url: "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&q=80",
-      legenda: "Pôr do sol inesquecível",
-    },
-  ],
-  3: [
-    // Unidade Mall
-    // Simulando unidade sem fotos
-  ],
-};
 
 export default function Galeria() {
   const { id } = useParams();
-  const { unidades, selecionarUnidade } = useContext(UnidadesContext);
+  const { selecionarUnidade } = useContext(UnidadesContext);
+
+  const [unidade, setUnidade] = useState(null);
   const [fotos, setFotos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [fotoAtual, setFotoAtual] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  const unidade = useMemo(() => {
-    const idNumerico = Number(id);
-    return (
-      unidades.find((u) => u.id === idNumerico) ||
-      unidadesMock.find((u) => u.id === idNumerico)
-    );
-  }, [id, unidades]);
-
-  // Garante que o context global saiba qual unidade está ativa
+  // Busca as fotos da unidade
   useEffect(() => {
-    if (unidade) {
-      selecionarUnidade(unidade.id);
+    const carregarDados = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const data = await unidadesService.getById(id);
+
+        setUnidade(data);
+        setFotos(data.fotos || []);
+        selecionarUnidade(data.id);
+      } catch (err) {
+        setError("Não foi possível carregar a galeria desta unidade.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      carregarDados();
     }
-  }, [unidade.id, selecionarUnidade, unidade]);
-
-  // Carrega fotos da unidade
-  useEffect(() => {
-    if (!unidade) return;
-
-    setLoading(true);
-    // Simulando carregamento da API
-    setTimeout(() => {
-      const fotosDaUnidade = fotosMock[unidade.id] || [];
-      setFotos(fotosDaUnidade);
-      setLoading(false);
-    }, 500);
-  }, [unidade]);
+  }, [id, selecionarUnidade]);
 
   // Abrir lightbox
   const abrirLightbox = (foto) => {
@@ -156,13 +77,15 @@ export default function Galeria() {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [lightboxOpen]);
 
-  if (!unidade) {
+  // Tela de Erro da API
+  if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-areia/20">
-        <div className="text-center p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div className="text-center p-8 bg-white rounded-2xl shadow-sm border border-red-100">
           <h2 className="text-2xl font-bold text-tinta mb-2">
-            Unidade não encontrada
+            Ops! Algo deu errado.
           </h2>
+          <p className="text-gray-600 mb-4">{error}</p>
           <Link
             to="/"
             className="text-teal-petroleo font-medium hover:underline"
@@ -170,6 +93,15 @@ export default function Galeria() {
             ← Voltar para a Home
           </Link>
         </div>
+      </div>
+    );
+  }
+
+  // Tela de Carregamento
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-areia/20">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-teal-petroleo border-t-transparent"></div>
       </div>
     );
   }

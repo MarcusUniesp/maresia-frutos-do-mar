@@ -2,57 +2,14 @@ import { useParams, Link } from "react-router-dom";
 import { useContext, useMemo, useEffect } from "react";
 import UnidadesContext from "../../contexts/UnidadesContext";
 
-//! Dados mockados (serão substituídos pela API)
-const unidadesMock = [
-  {
-    id: 1,
-    nome: "Maresia - Unidade Centro",
-    endereco: "Rua das Palmeiras, 123 - Centro",
-    telefone: "(11) 3456-7890",
-    horario: "Ter a Dom: 18h às 23h30",
-    descricao:
-      "Nossa unidade principal no coração da cidade. Um ambiente sofisticado com vista para o mar, perfeito para jantares românticos e reuniões de negócios.",
-    imagem:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80",
-    cardapioPdf: "/pdfs/cardapio-centro.pdf",
-  },
-  {
-    id: 2,
-    nome: "Maresia - Unidade Beach",
-    endereco: "Av. Beira Mar, 456 - Praia Grande",
-    telefone: "(11) 2345-6789",
-    horario: "Seg a Dom: 11h30 às 22h",
-    descricao:
-      "Localizada na orla da praia, nossa unidade Beach oferece um clima descontraído, música ao vivo nos fins de semana e o melhor pôr do sol da cidade.",
-    imagem:
-      "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1200&q=80",
-    cardapioPdf: "/pdfs/cardapio-beach.pdf",
-  },
-  {
-    id: 3,
-    nome: "Maresia - Unidade Mall",
-    endereco: "Shopping Center, Loja 789 - 3º Piso",
-    telefone: "(11) 4567-8901",
-    horario: "Seg a Sáb: 10h às 22h | Dom: 12h às 20h",
-    descricao:
-      "No coração do shopping, ideal para quem busca praticidade. Oferecemos um menu executivo rápido durante a semana e pratos especiais nos fins de semana.",
-    imagem:
-      "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1200&q=80",
-    cardapioPdf: "/pdfs/cardapio-mall.pdf",
-  },
-];
-
 export default function Unidade() {
   const { id } = useParams();
   const { unidades, selecionarUnidade } = useContext(UnidadesContext);
 
   const unidade = useMemo(() => {
     const idNumerico = Number(id);
-    // Tenta achar no context primeiro, senão cai no mock
-    return (
-      unidades.find((u) => u.id === idNumerico) ||
-      unidadesMock.find((u) => u.id === idNumerico)
-    );
+    // Tenta achar no context
+    return unidades.find((u) => u.id === idNumerico);
   }, [id, unidades]);
 
   // useEffect mínimo para garantir que o context global saiba qual unidade está ativa
@@ -100,7 +57,10 @@ export default function Unidade() {
       {/* Hero Banner da Unidade */}
       <section className="relative h-64 md:h-80 overflow-hidden">
         <img
-          src={unidade.imagem}
+          src={
+            unidade.fotos[0]?.url ||
+            "https://via.placeholder.com/800x400?text=Sem+imagem"
+          }
           alt={`Foto da ${unidade.nome}`}
           className="w-full h-full object-cover"
         />

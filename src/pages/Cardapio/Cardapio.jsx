@@ -2,28 +2,6 @@ import { useParams, Link } from "react-router-dom";
 import { useContext, useMemo, useEffect } from "react";
 import UnidadesContext from "../../contexts/UnidadesContext";
 
-//! Dados mockados (serão substituídos pela API)
-const unidadesMock = [
-  {
-    id: 1,
-    nome: "Maresia - Unidade Centro",
-    cardapioPdf: "/public/pdfs/centro.pdf",
-    telefone: "(11) 3456-7890",
-  },
-  {
-    id: 2,
-    nome: "Maresia - Unidade Beach",
-    cardapioPdf: "/public/pdfs/ponta-negra.pdf",
-    telefone: "(11) 2345-6789",
-  },
-  {
-    id: 3,
-    nome: "Maresia - Unidade Mall",
-    cardapioPdf: null, // Simulando arquivo indisponível
-    telefone: "(11) 4567-8901",
-  },
-];
-
 export default function Cardapio() {
   const { id } = useParams();
   const { unidades, selecionarUnidade } = useContext(UnidadesContext);
@@ -31,10 +9,7 @@ export default function Cardapio() {
   // Encontra a unidade de forma síncrona
   const unidade = useMemo(() => {
     const idNumerico = Number(id);
-    return (
-      unidades.find((u) => u.id === idNumerico) ||
-      unidadesMock.find((u) => u.id === idNumerico)
-    );
+    return unidades.find((u) => u.id === idNumerico);
   }, [id, unidades]);
 
   // Garante que o context global saiba qual unidade está ativa
@@ -64,7 +39,7 @@ export default function Cardapio() {
   }
 
   // Arquivo indisponível
-  if (!unidade.cardapioPdf) {
+  if (!unidade.cardapioPdfUrl) {
     return (
       <div className="min-h-screen bg-areia/20 py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -226,7 +201,7 @@ export default function Cardapio() {
             <div className="flex flex-col sm:flex-row gap-4">
               {/* Botão Principal */}
               <a
-                href={unidade.cardapioPdf}
+                href={unidade.cardapioPdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-teal-petroleo text-white px-6 py-3.5 rounded-lg font-semibold hover:bg-teal-escuro transition-all duration-300 shadow-sm hover:shadow-md flex-1"
@@ -249,7 +224,7 @@ export default function Cardapio() {
 
               {/* Botão Secundário para Download */}
               <a
-                href={unidade.cardapioPdf}
+                href={unidade.cardapioPdfUrl}
                 download
                 className="inline-flex items-center justify-center gap-2 bg-white text-tinta border border-gray-200 px-6 py-3.5 rounded-lg font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all duration-300 flex-1"
               >

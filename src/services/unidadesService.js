@@ -7,12 +7,12 @@ export const unidadesService = {
   },
 
   getById: async (id) => {
-    const response = await api.get(`/unidades/${id}`);
+    const response = await api.get(`/api/unidades/${id}`);
     return response.data;
   },
 
   getFotos: async (unidadeId) => {
-    const response = await api.get(`/unidades/${unidadeId}/fotos`);
+    const response = await api.get(`/api/fotos/unidade/${unidadeId}`);
     return response.data;
   },
 };

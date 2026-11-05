@@ -2,32 +2,6 @@ import { useParams, Link } from "react-router-dom";
 import { useContext, useMemo, useEffect, useState } from "react";
 import UnidadesContext from "../../contexts/UnidadesContext";
 
-//! Dados mockados (serão substituídos pela API)
-const unidadesMock = [
-  {
-    id: 1,
-    nome: "Maresia - Unidade Centro",
-    endereco: "Rua das Palmeiras, 123 - Centro, São Paulo - SP",
-    latitude: -23.561684,
-    longitude: -46.655981,
-  },
-  {
-    id: 2,
-    nome: "Maresia - Unidade Beach",
-    endereco: "Av. Beira Mar, 456 - Praia Grande, Praia Grande - SP",
-    latitude: -24.005833,
-    longitude: -46.402778,
-  },
-  {
-    id: 3,
-    nome: "Maresia - Unidade Mall",
-    endereco:
-      "Shopping Center, Loja 789 - 3º Piso, Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
-    latitude: -23.563194,
-    longitude: -46.656572,
-  },
-];
-
 export default function Localizacao() {
   const { id } = useParams();
   const { unidades, selecionarUnidade } = useContext(UnidadesContext);
@@ -36,10 +10,7 @@ export default function Localizacao() {
   // Encontra a unidade de forma síncrona
   const unidade = useMemo(() => {
     const idNumerico = Number(id);
-    return (
-      unidades.find((u) => u.id === idNumerico) ||
-      unidadesMock.find((u) => u.id === idNumerico)
-    );
+    return unidades.find((u) => u.id === idNumerico);
   }, [id, unidades]);
 
   // Garante que o context global saiba qual unidade está ativa

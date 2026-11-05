@@ -8,44 +8,7 @@ export default function Home() {
     useContext(UnidadesContext);
   const [unidadeHover, setUnidadeHover] = useState(null);
 
-  //! Dados mockados (serão substituídos pela API)
-  const unidadesMock = [
-    {
-      id: 1,
-      nome: "Maresia - Unidade Centro",
-      endereco: "Rua das Palmeiras, 123 - Centro",
-      telefone: "(11) 3456-7890",
-      descricao:
-        "Nossa unidade principal no coração da cidade, com vista para o mar e ambiente sofisticado.",
-      imagem:
-        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
-      especialidade: "Frutos do Mar Premium",
-    },
-    {
-      id: 2,
-      nome: "Maresia - Unidade Beach",
-      endereco: "Av. Beira Mar, 456 - Praia Grande",
-      telefone: "(11) 2345-6789",
-      descricao:
-        "Localizada na praia, perfeita para almoços de fim de semana com a família.",
-      imagem:
-        "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80",
-      especialidade: "Petiscos e Drinks",
-    },
-    {
-      id: 3,
-      nome: "Maresia - Unidade Mall",
-      endereco: "Shopping Center, Loja 789 - 3º Piso",
-      telefone: "(11) 4567-8901",
-      descricao:
-        "No shopping, ideal para quem busca praticidade sem abrir mão da qualidade.",
-      imagem:
-        "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80",
-      especialidade: "Menu Executivo",
-    },
-  ];
-
-  const unidadesExibir = unidades.length > 0 ? unidades : unidadesMock;
+  const unidadesExibir = unidades;
 
   if (loading) {
     return <Loading />;
@@ -141,7 +104,10 @@ export default function Home() {
                 {/* Imagem da unidade */}
                 <div className="relative h-56 overflow-hidden">
                   <img
-                    src={unidade.imagem}
+                    src={
+                      unidade.fotos[0]?.url ||
+                      "https://via.placeholder.com/800x400?text=Sem+imagem"
+                    }
                     alt={unidade.nome}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
